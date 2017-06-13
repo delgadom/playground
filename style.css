@@ -1,0 +1,80 @@
+div.acf-map-generator__controls select {
+  margin: 0 0 12px;
+}
+
+div.acf-map-generator__controls div.global-numbers {
+  width: 100%;
+  float: left;
+  padding-bottom: 20px;
+}
+
+div.acf-map-generator__controls div.global-number-input {
+  width: 46%;
+  float: left;
+  padding-right: 2%;
+}
+
+div.acf-map-generator__controls div.global-number-input label.disabled {
+  opacity: 0.5;
+}
+
+div.acf-map-generator__map-preview svg {
+  width: 100%;
+  height: auto;
+  fill: #bdbdbd;
+  stroke: #bdbdbd;
+  stroke-width: 0.01px;
+}
+
+div.acf-map-generator__map-preview svg path {
+  stroke: none;
+  stroke-width: 0.01px;
+}
+
+
+
+.key path {
+  display: none;
+}
+
+.key line {
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.legend {
+  top: -200px;
+  left: -200px;
+  border: 0px;      
+}
+
+.legend-title {
+    font-weight: bold;
+    font-size: 8px;
+    text-align: center;
+}
+
+.legend-box {
+    fill: none;
+    stroke: #888;
+    font-size: 7px;
+    border: 0px;      
+}
+
+.legend-entry {
+  font-size: 5px;
+}
+
+
+div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  width: 150px;                  
+  height: 25px;                 
+  padding: 2px;             
+  font-size: 10px;     
+  background: #FFFFE0;
+  border: 1px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+} 
