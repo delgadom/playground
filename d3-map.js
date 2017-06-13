@@ -36,8 +36,8 @@ var div = d3.select("body").append("div")
   .attr("id", "tooltip");
 
 var
-  // regionalTopo = './topo/globalRegions.json'; // This is just the map json
-  regionalTopo = './topo/globalRegions-tiny.json'; // This is just the map json
+  regionalTopo = './topo/globalRegions.json'; // This is just the map json
+  // regionalTopo = './topo/globalRegions-tiny.json'; // This is just the map json
   // regionalTopo = './topo/high-res-regions-simplified.topo.json'
 
 var svg = d3.select($('div.acf-map-generator__map-preview')[0])
