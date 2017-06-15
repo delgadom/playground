@@ -2,3 +2,6 @@ csv
 
 # local javascript files
 lib
+
+*.pdf
+.DS_Store
