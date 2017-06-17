@@ -1,4 +1,4 @@
 {
     "bins": [null, 10, 20, 30, 40, 50, 75, 100, 150, 200, null],
-    "color_scheme": ["#6d0e32", "#cbdedf"]
+    "color_scheme": ["#cbdedf", "#2e8c93"]
 }

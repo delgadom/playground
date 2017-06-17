@@ -5,6 +5,10 @@ var loaded_csv_data = {}
     baseHeight = 173
     postData = {};
 
+// define color scheme
+var bins = [];
+var color_palette = [];
+
 var load_dataset = function(filepath, callback) {
 
   if (loaded_csv_data.hasOwnProperty(filepath)) {
@@ -156,21 +160,21 @@ var refreshMap = function() {
     load_dataset(selectedGlobalDataset, function(preppedGlobalDataset) {
 
       // This is where we want to work
-      var bins = []
+      bins = []
 
       format.bins.forEach(function(d, i) {bins.push(Number(d))});
 
       if (format.color_palette !== undefined) {
 
         // just use the color palette given if defined
-        var color_palette = format.color_palette;
+        color_palette = format.color_palette;
 
       } else if (format.diverging === true) { 
 
           // build a diverging color scheme using two colors in "color_scheme"
 
           // this is the array we use in our color function
-          var color_palette = [];
+          color_palette = [];
 
           // first half
           var
@@ -200,7 +204,7 @@ var refreshMap = function() {
             .interpolate(d3.interpolateLab)
             .range([d3.rgb(format.color_scheme[0]), d3.rgb(format.color_scheme[1])]);
 
-        var color_palette = [];
+        color_palette = [];
 
         for (var i = 0; i < bins.length-1; i++) {
           color_palette.push(color_scheme(i));
@@ -212,7 +216,7 @@ var refreshMap = function() {
       var 
         color = d3.scaleThreshold()
           .domain(bins.slice(1, bins.length-1))
-          .range(format.color_palette);
+          .range(color_palette);
 
 
       svg
@@ -371,12 +375,28 @@ var global_combo_relative = document.getElementById("combobox-relative");
 global_combo_relative.onchange = function() {setTimeout(refreshMap, 0.01)};
 
 var global_slider_period = document.getElementById("period-slider");
-global_slider_period.onchange = function() {setTimeout(refreshMap, 0.01)};
-
-var mapGenButton = $('button.generate-map');
-var period_slider = document.getElementById("period-slider");
 var period_value = document.getElementById("period-value");
-period_slider.onchange = function() {
+global_slider_period.onchange = function() {
   period_value.innerHTML = periods[period_slider.value].replace("_", " to ");
-  setTimeout(refreshMap, 0.01);
+  setTimeout(refreshMap, 0.01)};
+
+function rgb2hex(rgb){
+ rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+ return (rgb && rgb.length === 4) ? "#" +
+  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
 }
+
+var downloadPalette = document.getElementById('download-palette');
+downloadPalette.onclick = function() {
+  var body = JSON.stringify({
+    bins: bins,
+    color_palette: color_palette.map(rgb2hex)
+  }, space=1);
+  var link=document.createElement('a');
+  document.body.appendChild(link);
+  link.href=("data:application/octet-stream," + body);
+  link.click();
+}
+
