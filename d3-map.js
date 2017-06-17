@@ -156,14 +156,62 @@ var refreshMap = function() {
     load_dataset(selectedGlobalDataset, function(preppedGlobalDataset) {
 
       // This is where we want to work
-      var color_palette = format.color_palette;
       var bins = []
 
       format.bins.forEach(function(d, i) {bins.push(Number(d))});
 
-      var color = d3.scaleThreshold()
-        .domain(bins.slice(1, bins.length-1))
-        .range(color_palette);
+      if (format.color_palette === undefined) {
+        if (format.diverging === true) { 
+          // build a diverging color scheme from "color_scheme"
+
+          var color_palette = [];
+
+          var
+            color_scheme = d3.scaleLinear().domain([1,bins.length/2-1])
+              .interpolate(d3.interpolateLab)
+              .range([d3.rgb(format.color_scheme[0]), d3.rgb("#cbdedf")]);
+
+          for (var i = 0; i < (bins.length/2-1); i++) {
+            color_palette.push(color_scheme(i));
+          }
+
+          color_scheme = d3.scaleLinear().domain([bins.length/2, bins.length-1])
+              .interpolate(d3.interpolateLab)
+              .range([d3.rgb("#cbdedf"), d3.rgb(format.color_scheme[1])]);
+
+          for (var i = bins.length/2; i < (bins.length-1); i++) {
+            color_palette.push(color_scheme(i));
+          }
+
+          var color = d3.scaleThreshold()
+                .domain(bins.slice(1, bins.length-1))
+                .range(color_palette);
+
+        } else {
+          // build an interpolated color scheme
+          var
+            color_scheme = d3.scaleLinear().domain([1,bins.length])
+              .interpolate(d3.interpolateLab)
+              .range([d3.rgb(format.color_scheme[0]), d3.rgb(format.color_scheme[1])]);
+
+          var color_palette = [];
+
+          for (var i = 0; i < bins.length-1; i++) {
+            color_palette.push(color_scheme(i));
+          }
+
+          var color = d3.scaleThreshold()
+                .domain(bins.slice(1, bins.length-1))
+                .range(color_palette);
+        }
+
+      } else {
+        var 
+          color = d3.scaleThreshold()
+            .domain(bins.slice(1, bins.length-1))
+            .range(format.color_palette);
+      }
+
 
       svg
         .selectAll("path")
