@@ -5,6 +5,8 @@ var loaded_csv_data = {}
     baseHeight = 173
     postData = {};
 
+var grey = d3.rgb("#C3C3C3");
+
 // define color scheme
 var bins = [];
 var color_palette = [];
@@ -174,7 +176,7 @@ var refreshMap = function() {
           var
             color_scheme = d3.scaleLinear().domain([1,bins.length/2-1])
               .interpolate(d3.interpolateLab)
-              .range([d3.rgb(format.color_scheme[0]), d3.rgb("#cbdedf")]);
+              .range([d3.rgb(format.color_scheme[0]), grey]);
 
           for (var i = 0; i < (bins.length/2-1); i++) {
             color_palette.push(color_scheme(i));
@@ -183,7 +185,7 @@ var refreshMap = function() {
           // second half
           color_scheme = d3.scaleLinear().domain([bins.length/2, bins.length-1])
               .interpolate(d3.interpolateLab)
-              .range([d3.rgb("#cbdedf"), d3.rgb(format.color_scheme[1])]);
+              .range([grey, d3.rgb(format.color_scheme[1])]);
 
           for (var i = bins.length/2; i < (bins.length-1); i++) {
             color_palette.push(color_scheme(i));
@@ -191,6 +193,14 @@ var refreshMap = function() {
 
 
       } else {
+
+        if (format.color_scheme[0] === null) {
+          format.color_scheme[0] = grey;
+        }
+
+        if (format.color_scheme[1] === null) {
+          format.color_scheme[1] = grey;
+        }
 
         // build an interpolated color scheme between colors in "color_scheme"
         var
