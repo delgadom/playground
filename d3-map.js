@@ -41,8 +41,8 @@ var div = d3.select("body").append("div")
 
 var
   // regionalTopo = './topo/globalRegions.json'; // This is just the map json
+    // regionalTopo = './topo/nyt_small_simplefied.json'; // This is just the map json
   regionalTopo = './topo/new_shapefile.topo.json'; // This is just the map json
-  // regionalTopo = './topo/high-res-regions-simplified.topo.json'
 
 var svg = d3.select($('div.acf-map-generator__map-preview')[0])
   .append('svg')
@@ -110,12 +110,6 @@ var refreshMap = function() {
     global_combo_variable = document.getElementById("combobox-variable"),
     global_combo_relative = document.getElementById("combobox-relative");
     global_slider_period = document.getElementById("period-slider");
-
-  var
-    // globalDatasets = './csv/tas_DJF_2040_2059_absolute_degF_percentiles.csv', // CHANGE THIS TO ANY DATASET YOUD LIKE TO GENERATE INTO CHOROPLETH
-    regionalTopo = './topo/globalRegions.json'; // This is just the map json
-    // regionalTopo = './topo/high-res-regions-simplified.topo.json'
-
 
   // Get selected dataset
   var selectedGlobalPercentile = globalPercentileSelect.value,
