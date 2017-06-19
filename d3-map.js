@@ -377,8 +377,9 @@ global_combo_relative.onchange = function() {setTimeout(refreshMap, 0.01)};
 var global_slider_period = document.getElementById("period-slider");
 var period_value = document.getElementById("period-value");
 global_slider_period.onchange = function() {
-  period_value.innerHTML = periods[period_slider.value].replace("_", " to ");
-  setTimeout(refreshMap, 0.01)};
+  period_value.innerHTML = periods[global_slider_period.value].replace("_", " to ");
+  setTimeout(refreshMap, 0.01)
+};
 
 function rgb2hex(rgb){
  rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
