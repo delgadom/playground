@@ -41,7 +41,7 @@ var div = d3.select("body").append("div")
 
 var
   // regionalTopo = './topo/globalRegions.json'; // This is just the map json
-    regionalTopo = './topo/nyt_small_simplefied.json'; // This is just the map json
+    regionalTopo = './topo/nyt_small_simplified.json'; // This is just the map json
   // regionalTopo = './topo/new_shapefile.topo.json'; // This is just the map json
 
 var svg = d3.select($('div.acf-map-generator__map-preview')[0])
