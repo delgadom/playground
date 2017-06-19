@@ -1,5 +1,1 @@
-{
-    "bins": [null, 0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5, 100, null],
-    "color_scheme": ["#2e8c93", "#6d0e32"],
-    "diverging": true
-}
+{"diverging": true, "color_scheme": ["#2e8c93", "#6d0e32"], "bins": [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120]}
