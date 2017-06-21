@@ -26,7 +26,7 @@ def get_data(var, rel, unit):
 
 def create_range(var, rel, df, base_period):
     middle = df.stack('quantile')[base_period].median()
-    bottom, top = df.stack('quantile').stack('period')['0.5'].quantile([0.02, 0.98])
+    bottom, top = df.stack('quantile').stack('period').quantile([0.02, 0.98])
 
     print(var, rel, bottom, middle, top)
 

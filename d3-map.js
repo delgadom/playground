@@ -2,7 +2,7 @@ var periods = ["1986_2005", "2020_2039", "2040_2059", "2080_2099"];
 
 // add any regions you'd like to this array to color them blue
 // var highlight_regions = ['USA.9.317', 'IND.10.121.371'];
-var highlight_regions = [];
+var highlight_regions = ['USA.9.317', 'IND.10.121.371'];
 var highlight_color = d3.rgb('#0000ff')
 
 var loaded_csv_data = {}
