@@ -133,10 +133,10 @@ var refreshMap = function() {
 
   if (selected_variable == 'tasmin-under-32F') {
     filepath_unit = 'days-under-32F';
-    unit_name = ['Count of days'];
+    unit_name = ['Count of', 'days'];
   } else if (selected_variable == 'tasmax-over-95F') {
     filepath_unit = 'days-over-95F';
-    unit_name = ['Count of days'];
+    unit_name = ['Count of', 'days'];
   } else {
     filepath_unit = 'degF';
     unit_name = ['Temperature', 'bins'];
@@ -301,8 +301,8 @@ var refreshMap = function() {
 
 
       var boxmargin = 4,
-        lineheight = 8;
-        keyheight = 6,
+        lineheight = 6;
+        keyheight = 5,
         keywidth = 10,
         boxwidth = 1.5 * keywidth;
 
