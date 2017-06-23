@@ -137,6 +137,9 @@ var refreshMap = function() {
   } else if (selected_variable == 'tasmax-over-95F') {
     filepath_unit = 'days-over-95F';
     unit_name = ['Count of', 'days'];
+  } else if (selected_variable == 'tasmax-over-118F') {
+    filepath_unit = 'days-over-118F';
+    unit_name = ['Count of', 'days'];
   } else {
     filepath_unit = 'degF';
     unit_name = ['Temperature', 'bins'];

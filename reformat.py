@@ -3,11 +3,12 @@ import os
 import shutil
 import itertools
 
-read_path = 'csv3/global-csvs-v2.0/{agglev}/global_{transformation}_{rcp}_{period}_{relative}_{unit}_{qty}.csv'
+read_path = 'csv3/global-csvs-v2.3/{agglev}/global_{transformation}_{rcp}_{period}_{relative}_{unit}_{qty}.csv'
 write_path = 'csv/global_{agglev}_{variable}_{rcp}_{period}_{relative}_{unit}_{qty}.csv'
 
 variables = [
     {'transformation': 'tasmax-over-95F', 'variable': 'tasmax-over-95F', 'unit': 'days-over-95F'},
+    {'transformation': 'tasmax-over-118F', 'variable': 'tasmax-over-118F', 'unit': 'days-over-118F'},
     {'transformation': 'tasmin-under-32F', 'variable': 'tasmin-under-32F', 'unit': 'days-under-32F'},
     {'transformation': 'tas-seasonal_DJF', 'variable': 'tas-DJF', 'unit': 'degF'},
     {'transformation': 'tas-seasonal_MAM', 'variable': 'tas-MAM', 'unit': 'degF'},
@@ -18,7 +19,7 @@ variables = [
 
 agglevs = [
     {'agglev': 'hierid', 'qty': 'percentiles'},
-    {'agglev': 'ISO', 'qty': 'percentiles-national'}
+    # {'agglev': 'ISO', 'qty': 'percentiles-national'}
 ]
 
 
