@@ -1,4 +1,11 @@
-var periods = ["1986_2005", "2020_2039", "2040_2059", "2080_2099"];
+var periods = ["1986-2005", "2020-2039", "2040-2059", "2080-2099"];
+
+// add any regions you'd like to this array to color them blue
+// var highlight_regions = ['USA.9.317', 'IND.10.121.371'];
+var highlight_regions = [];
+var highlight_color = d3.rgb('#0000ff')
+
+var excludes = ['CA-', 'ATA'];
 
 var loaded_csv_data = {}
     baseWidth = 360,
@@ -43,8 +50,8 @@ var div = d3.select("body").append("div")
 
 var
   // regionalTopo = './topo/globalRegions.json'; // This is just the map json
-    regionalTopo = './topo/nyt_small_simplified.json'; // This is just the map json
-  // regionalTopo = './topo/new_shapefile.topo.json'; // This is just the map json
+    // regionalTopo = './topo/nyt_small_simplified.json'; // This is just the map json
+  regionalTopo = './topo/new_shapefile.topo.json'; // This is just the map json
 
 var svg = d3.select($('div.acf-map-generator__map-preview')[0])
   .append('svg')
@@ -77,7 +84,7 @@ d3.json(regionalTopo, function(error, map) {
     .data(topojson.feature(map, map.objects.cil3).features)
     .enter().append("path")
     .attr("fill", function(d) { 
-        if (d.properties.hierid.substring(0, 3) === "CA-") {
+        if (excludes.indexOf(d.properties.hierid.substring(0, 3)) > -1) {
             return "#fff";
         } else {
             return "#bdbdbd";
@@ -111,31 +118,37 @@ var refreshMap = function() {
     globalPercentileSelect = document.getElementById("global-dataset-percentile-list"),
     global_combo_variable = document.getElementById("combobox-variable"),
     global_combo_relative = document.getElementById("combobox-relative");
+    global_combo_scenario = document.getElementById("global-scenario");
     global_slider_period = document.getElementById("period-slider");
 
   // Get selected dataset
   var selectedGlobalPercentile = globalPercentileSelect.value,
       selected_variable = global_combo_variable.value,
       selected_relative = global_combo_relative.value,
+      selected_scenario = global_combo_scenario.value,
       selected_period = periods[global_slider_period.value];
 
   var filepath_unit,
     unit_name;
 
-  if (selected_variable == 'tasmin') {
+  if (selected_variable == 'tasmin-under-32F') {
     filepath_unit = 'days-under-32F';
-    unit_name = ['Count of days'];
-  } else if (selected_variable == 'tasmax') {
+    unit_name = ['Count of', 'days'];
+  } else if (selected_variable == 'tasmax-over-95F') {
     filepath_unit = 'days-over-95F';
-    unit_name = ['Count of days'];
+    unit_name = ['Count of', 'days'];
+  } else if (selected_variable == 'tasmax-over-118F') {
+    filepath_unit = 'days-over-118F';
+    unit_name = ['Count of', 'days'];
   } else {
     filepath_unit = 'degF';
     unit_name = ['Temperature', 'bins'];
   }
 
   var selectedGlobalDataset = (
-        "./csv/"
+        "./csv/global_hierid_"
         + selected_variable
+        + "_" + selected_scenario
         + "_" + selected_period
         + "_" + selected_relative
         + "_" + filepath_unit
@@ -230,10 +243,12 @@ var refreshMap = function() {
             // console.log( 'Found Region:', d.properties.hierid,  preppedGlobalDataset[d.properties.hierid]  );
             // If USA regions, ignore
 
-            if (d.properties.hierid.substring(0, 3) === "CA-") {
+            if (excludes.indexOf(d.properties.hierid.substring(0, 3)) > -1) {
                 return "#fff";
             // } else if ( d.properties.hierid.substring(0, 3) === 'USA' ) {
             //   return '#bdbdbd';
+            } else if (highlight_regions.indexOf(d.properties.hierid) > -1) {
+              return highlight_color;
             } else {
 
               // console.log(preppedGlobalDataset[d.properties.hierid][selectedGlobalPercentile]);
@@ -259,7 +274,7 @@ var refreshMap = function() {
         
         //Adding mouseevents
         .on("mouseover", function(d) {
-          if (d.properties.hierid.substring(0, 3) === "CA-") { return ;}
+          if (excludes.indexOf(d.properties.hierid.substring(0, 3)) > -1) { return ;}
           div.transition().duration(100)
             .style("opacity", 1)
           div.text(preppedGlobalDataset[d.properties.hierid]['hierid'] + " : " + preppedGlobalDataset[d.properties.hierid][selectedGlobalPercentile])
@@ -289,8 +304,8 @@ var refreshMap = function() {
 
 
       var boxmargin = 4,
-        lineheight = 8;
-        keyheight = 6,
+        lineheight = 6;
+        keyheight = 5,
         keywidth = 10,
         boxwidth = 1.5 * keywidth;
 
@@ -377,6 +392,9 @@ global_combo_variable.onchange = function() {setTimeout(refreshMap, 0.01)};
 
 var global_combo_relative = document.getElementById("combobox-relative");
 global_combo_relative.onchange = function() {setTimeout(refreshMap, 0.01)};
+
+var global_scenario = document.getElementById("global-scenario");
+global_scenario.onchange = function() {setTimeout(refreshMap, 0.01)};
 
 var global_slider_period = document.getElementById("period-slider");
 var period_value = document.getElementById("period-value");

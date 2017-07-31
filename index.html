@@ -32,21 +32,24 @@
 
   <div class="acf-map-generator__controls">
     <h5>Controls</h5>
-    Show 
+    
+    Show  me
 
     <select id="combobox-variable">
-      <option value="tas_DJF">Dec-Jan-Feb avg temp</option>
-      <option value="tas_MAM">Mar-Apr-May avg temp</option>
-      <option value="tas_JJA" selected>Jun-Jul-Aug avg temp</option>
-      <option value="tas_SON">Sep-Oct-Nov avg temp</option>
-      <option value="tasmax">days with max temp over 95F</option>
-      <option value="tasmin">days with min temp under 32F</option>
+      <option value="tas-annual">Annual avg temp</option>
+      <option value="tas-DJF">Dec-Jan-Feb avg temp</option>
+      <option value="tas-MAM">Mar-Apr-May avg temp</option>
+      <option value="tas-JJA" selected>Jun-Jul-Aug avg temp</option>
+      <option value="tas-SON">Sep-Oct-Nov avg temp</option>
+      <option value="tasmax-over-95F">days with max temp over 95F</option>
+      <option value="tasmax-over-118F">days with max temp over 118F</option>
+      <option value="tasmin-under-32F">days with min temp under 32F</option>
     </select>
     
      as 
     <select id="combobox-relative">
       <option value="absolute">absolute values</option>
-      <option value="change-from-hist">change from historical</option>
+      <option value="change-from-hist" selected>change from historical</option>
     </select>
      at 
     <select class="global-dataset-percentile-list" id="global-dataset-percentile-list">
@@ -55,7 +58,14 @@
 			<option value="0.95">1-in-20 high</option>
 		</select>
 
-    probability
+    probability under a 
+
+    <select class="global-scenario" id="global-scenario">
+      <option value="rcp45">moderate</option>
+      <option value="rcp85" selected>high</option>
+    </select>
+
+    emissions scenario
 
     <br />
     <input type="range" id="period-slider" value="3" step="1" min="0" max="3" data-show-value="true">

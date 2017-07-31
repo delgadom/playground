@@ -3,30 +3,36 @@ import json
 import pandas as pd
 import numpy as np
 
-pers = ['1986_2005', '2020_2039', '2040_2059', '2080_2099']
+pers = ['1986-2005', '2020-2039', '2040-2059', '2080-2099']
 variables = [
-    ('tas_DJF', 'degF'),
-    ('tas_MAM', 'degF'),
-    ('tas_JJA', 'degF'),
-    ('tas_SON', 'degF'),
-    ('tasmax', 'days-over-95F'),
-    ('tasmin', 'days-under-32F')]
+    ('tas-annual', 'degF'),
+    ('tas-DJF', 'degF'),
+    ('tas-DJF', 'degF'),
+    ('tas-MAM', 'degF'),
+    ('tas-JJA', 'degF'),
+    ('tas-SON', 'degF'),
+    ('tasmax-over-95F', 'days-over-95F'),
+    ('tasmin-under-32F', 'days-under-32F')]
 
 relatives = [
-    ('absolute', '1986_2005'),
-    ('change-from-hist', '2080_2099')]
+    ('absolute', '1986-2005'),
+    ('change-from-hist', '2080-2099')]
+
+scenarios = ['rcp45', 'rcp85']
 
 def get_data(var, rel, unit):
   return pd.concat([
-    pd.read_csv(
-        'csv/{var}_{per}_{rel}_{unit}_percentiles.csv'
-          .format(var=var, per=per, rel=rel, unit=unit),
-        index_col=0)
-      for per in pers], axis=1, keys=pd.Index(pers, name='period'), names=['period', 'quantile'])
+    pd.concat([
+        pd.read_csv(
+            'csv/global_hierid_{var}_{rcp}_{per}_{rel}_{unit}_percentiles.csv'
+              .format(var=var, rcp=rcp, per=per, rel=rel, unit=unit),
+            index_col=0)
+          for per in pers], axis=1, keys=pd.Index(pers, name='period'), names=['period', 'quantile'])
+    for rcp in scenarios], axis=1, keys=pd.Index(scenarios, name='rcp'), names=['rcp', 'period', 'quantile'])
 
 def create_range(var, rel, df, base_period):
-    middle = df.stack('quantile')[base_period].median()
-    bottom, top = df.stack('quantile').stack('period').quantile([0.02, 0.98])
+    middle = df.stack(['quantile', 'rcp'])[base_period].median()
+    bottom, top = df.stack(['rcp', 'period'])['0.5'].quantile([0.05, 0.95])
 
     print(var, rel, bottom, middle, top)
 
