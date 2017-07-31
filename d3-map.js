@@ -341,7 +341,7 @@ var refreshMap = function() {
             var d = color.invertExtent(thisColor);
             if (d[0] == null) d[0] = color.domain()[0] - 1;
             if (d[1] == null) d[1] = color.domain()[1] + 1;
-            return d;
+            return d[0];
           }))
           .enter().append("rect")
           .attr("y", function(d, i) { return i*lineheight+lineheight-keyheight; })
